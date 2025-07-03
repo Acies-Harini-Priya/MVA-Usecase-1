@@ -116,8 +116,8 @@ tables:
         type: number
         description: Cost
 
-      - name: {TABLE.lapsed_or_returned_join_date}
-        column: "{{TABLE.lapsed_or_returned_join_date}}"
+      - name: lapsed_or_returned_join_date
+        column: "{lapsed_or_returned_table_1.join_date}"
         type: time
         description: join_date
 
