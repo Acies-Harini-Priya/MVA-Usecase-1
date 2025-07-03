@@ -116,6 +116,11 @@ tables:
         type: number
         description: Cost
 
+      - name: lapsed_or_returned_join_date
+        column: "{lapsed_or_returned_join_date}"
+        type: time
+        description: join_date
+
     measures:
       - name: profit
         sql: SUM({TABLE.calc_revenue}-{TABLE.v_cost})  
@@ -198,22 +203,22 @@ tables:
         description: ltv  
 
       - name: profit_15D
-        sql:  "SUM(CASE WHEN {TABLE.visit_datetime} >= lapsed_or_returned_table_1.join_date and {TABLE.visit_datetime} <= date_add('day',15,lapsed_or_returned_table_1.join_date) THEN mva_revenue_ltv_1.revenue - mva_cost_ltv_1.cost END)"  
+        sql:  "SUM(CASE WHEN {TABLE.visit_datetime} >= lapsed_or_returned_join_date and {TABLE.visit_datetime} <= date_add('day',15,lapsed_or_returned_join_date) THEN mva_revenue_ltv_1.revenue - mva_cost_ltv_1.cost END)"  
         type: number
         description: 15 days profit 
       
       - name: profit_30D
-        sql:  "SUM(CASE WHEN {TABLE.visit_datetime} >= lapsed_or_returned_table_1.join_date and {TABLE.visit_datetime} <= date_add('day',30,lapsed_or_returned_table_1.join_date) THEN mva_revenue_ltv_1.revenue - mva_cost_ltv_1.cost END)"  
+        sql:  "SUM(CASE WHEN {TABLE.visit_datetime} >= lapsed_or_returned_join_date and {TABLE.visit_datetime} <= date_add('day',30,lapsed_or_returned_join_date) THEN mva_revenue_ltv_1.revenue - mva_cost_ltv_1.cost END)"  
         type: number
         description: 30 days profit 
 
       - name: profit_45D
-        sql:  "SUM(CASE WHEN {TABLE.visit_datetime} >= lapsed_or_returned_table_1.join_date and {TABLE.visit_datetime} <= date_add('day',45,lapsed_or_returned_table_1.join_date) THEN mva_revenue_ltv_1.revenue - mva_cost_ltv_1.cost END)"  
+        sql:  "SUM(CASE WHEN {TABLE.visit_datetime} >= lapsed_or_returned_join_date and {TABLE.visit_datetime} <= date_add('day',45,lapsed_or_returned_join_date) THEN mva_revenue_ltv_1.revenue - mva_cost_ltv_1.cost END)"  
         type: number
         description: 45 days profit 
     
       - name: profit_60D
-        sql:  "SUM(CASE WHEN {TABLE.visit_datetime} >= lapsed_or_returned_table_1.join_date and {TABLE.visit_datetime} <= date_add('day',60,lapsed_or_returned_table_1.join_date) THEN mva_revenue_ltv_1.revenue - mva_cost_ltv_1.cost END)"  
+        sql:  "SUM(CASE WHEN {TABLE.visit_datetime} >= lapsed_or_returned_join_date and {TABLE.visit_datetime} <= date_add('day',60,lapsed_or_returned_join_date) THEN mva_revenue_ltv_1.revenue - mva_cost_ltv_1.cost END)"  
         type: number
         description: 60 days profit 
 
