@@ -4,4 +4,4 @@ SELECT
     visit_date,
     status
 FROM    
-    sstdepot:MVA.LAPSED_OR_RETURNED_TABLE
+    sstdepot.MVA.LAPSED_OR_RETURNED_TABLE
