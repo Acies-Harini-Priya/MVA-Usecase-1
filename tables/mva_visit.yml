@@ -121,6 +121,11 @@ tables:
         type: time
         description: join_date
 
+      - name: lapsed_or_returned_status
+        column: "{lapsed_or_returned_table_1.status}"
+        type: string
+        description: status
+
       - name: mva_revenue
         column: "{mva_revenue_ltv_1.revenue}"
         type: number
@@ -243,5 +248,12 @@ tables:
  
       - name: device_tablet
         sql: device = 'tablet'
-        description: This segment filters visits based on device    
- 
+        description: This segment filters visits based on device  
+
+      - name: lapsed_users
+        sql: "{TABLE}.lapsed_or_returned_status = 'Lapsed'"
+        description: This segment filters only lapsed users    
+      
+      - name: returned_users
+        sql: "{TABLE}.lapsed_or_returned_status = 'returned'"
+        description: This segment filters only lapsed users    
