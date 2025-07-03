@@ -1,6 +1,6 @@
 tables:
   - name: lapsed_or_returned_table_1
-    sql: {{ load_sql('lapsed_or_returned_table') }}
+    sql: {{ load_sql('mva_lapsed_or_returned') }}
     description: Lapsed or returned table
     public: true
 
