@@ -23,6 +23,10 @@ tables:
       - name: member_registration_1
         relationship: one_to_one
         sql: "{TABLE.user_id}={member_registration_1.user_id} "
+
+      - name: lapsed_or_returned_table_1
+        relationship: one_to_one
+        sql: "{TABLE.user_id}={lapsed_or_returned_table_1.user_id} "
  
     dimensions:
       - name: session_id
@@ -106,49 +110,28 @@ tables:
         column: "{mva_revenue_ltv_1.revenue}"
         type: number
         description: Revenue
-       
- 
+
       - name: v_cost
         column: "{mva_cost_ltv_1.cost}"
         type: number
         description: Cost
-     
-      - name: mem_reg_join_date
-        column: "{member_registration_1.join_date}"
-        type: time
-        public: false
- 
-      - name: status
-        sql: >
-            CASE
-                WHEN DATEDIFF({TABLE.visit_datetime}, {TABLE.mem_reg_join_date}) < 240 THEN 0
-                ELSE 1
-            END
-        type: number
-        description: Status
 
-      - name: lapsed_or_returned
-        sql: "MAX ({TABLE.status}) OVER (PARTITION BY {TABLE.user_id})"
-        type: number
-        description: Identifying lapsed or returned
-       
     measures:
- 
       - name: profit
         sql: SUM({TABLE.calc_revenue}-{TABLE.v_cost})  
         type: number
         description: Profit earned      
-       
+
       - name: total_sessions
         sql: "{TABLE.session_id}"
         type: count_distinct
         description: Total distinct sessions in the dataset
- 
+
       - name: total_visits
         sql: "{TABLE.visit_id}"
         type: count_distinct
         description: Total distinct visits in the dataset
- 
+
       - name: total_users
         sql: user_id
         type: count_distinct
@@ -213,12 +196,27 @@ tables:
         sql:  "({TABLE.profit}/{TABLE.total_unique_ids})"  
         type: number
         description: ltv  
- 
-      - name: last_visits
-        sql: "MAX({TABLE.visit_datetime})"
-        type: time
-        description: last_visits
- 
+
+      - name: profit_15D
+        sql:  "SUM(CASE WHEN TABLE.visit_datetime >= lapsed_or_returned_table_1.join_date and TABLE.visit_datetime <= date_add('day',15,lapsed_or_returned_table_1.join_date) THEN mva_revenue_ltv_1.revenue - mva_cost_ltv_1.cost END)"  
+        type: number
+        description: 15 days profit 
+      
+      - name: profit_30D
+        sql:  "SUM(CASE WHEN TABLE.visit_datetime >= lapsed_or_returned_table_1.join_date and TABLE.visit_datetime <= date_add('day',30,lapsed_or_returned_table_1.join_date) THEN mva_revenue_ltv_1.revenue - mva_cost_ltv_1.cost END)"  
+        type: number
+        description: 30 days profit 
+
+      - name: profit_45D
+        sql:  "SUM(CASE WHEN TABLE.visit_datetime >= lapsed_or_returned_table_1.join_date and TABLE.visit_datetime <= date_add('day',45,lapsed_or_returned_table_1.join_date) THEN mva_revenue_ltv_1.revenue - mva_cost_ltv_1.cost END)"  
+        type: number
+        description: 45 days profit 
+    
+      - name: profit_60D
+        sql:  "SUM(CASE WHEN TABLE.visit_datetime >= lapsed_or_returned_table_1.join_date and TABLE.visit_datetime <= date_add('day',60,lapsed_or_returned_table_1.join_date) THEN mva_revenue_ltv_1.revenue - mva_cost_ltv_1.cost END)"  
+        type: number
+        description: 60 days profit 
+
     segments:
       - name: device_desktop
         sql: device = 'desktop'
@@ -232,6 +230,3 @@ tables:
         sql: device = 'tablet'
         description: This segment filters visits based on device    
  
-      # - name: user_category
-      #   sql: lapsed_or_returned_users = 'Lapsed'
-      #   description: This segment filters only users who are lapsed

@@ -1,0 +1,26 @@
+tables:
+  - name: lapsed_or_returned_table_1
+    sql: {{ load_sql('lapsed_or_returned_table') }}
+    description: Lapsed or returned table
+    public: true
+
+    dimensions:
+      - name: user_id
+        column: user_id
+        type: string
+        description: Unique identifier for the user
+
+      - name: join_date
+        column: join_date
+        type: time
+        description: The date when the user registered or joined 
+
+      - name: visit_date
+        column: visit_date
+        type: time
+        description: The date when the user visited
+
+      - name: status
+        column: status
+        type: string
+        description: Status 
