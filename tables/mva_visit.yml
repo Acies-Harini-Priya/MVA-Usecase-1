@@ -251,9 +251,9 @@ tables:
         description: This segment filters visits based on device  
 
       - name: lapsed_users
-        sql: "{TABLE}.lapsed_or_returned_status = 'Lapsed'"
+        sql: "{TABLE.lapsed_or_returned_status} = 'Lapsed'"
         description: This segment filters only lapsed users    
       
       - name: returned_users
-        sql: "{TABLE}.lapsed_or_returned_status = 'returned'"
+        sql: "{TABLE.lapsed_or_returned_status} = 'returned'"
         description: This segment filters only lapsed users    
