@@ -39,9 +39,9 @@ tables:
     measures:
       
       - name: sum_cost
-        sql: SUM({TABLE.cost})  
+        sql: SUM(COALESCE({TABLE.cost}, 0)) 
         type: number 
-        description: total cost  
+        description: total cost 
 
       - name: total_visits
         sql: visit_id

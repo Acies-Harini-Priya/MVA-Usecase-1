@@ -112,7 +112,7 @@ tables:
         description: Revenue
 
       - name: v_cost
-        column: "{mva_cost_ltv_1.cost}"
+        column: "COALESCE({mva_cost_ltv_1.cost}, 0)"
         type: number
         description: Cost
 
@@ -132,15 +132,15 @@ tables:
         description: revenue
 
       - name: mva_cost
-        column: "{mva_cost_ltv_1.cost}"
+        column: "COALESCE({mva_cost_ltv_1.cost}, 0)"
         type: number
         description: cost
 
     measures:
       - name: profit
-        sql: SUM({TABLE.calc_revenue}-{TABLE.v_cost})  
+        sql: SUM(COALESCE({TABLE.calc_revenue}-{TABLE.v_cost}, 0))
         type: number
-        description: Profit earned      
+        description: Profit earned        
 
       - name: total_sessions
         sql: "{TABLE.session_id}"
@@ -239,16 +239,16 @@ tables:
 
     segments:
       - name: device_desktop
-        sql: device = 'desktop'
-        description: This segment filters visits based on device
- 
+        sql:  "{TABLE.device} = 'desktop'"
+        description: This segment filters visits based on device 
+
       - name: device_mobile
-        sql: device = 'mobile'
+        sql: "{TABLE.device} = 'mobile'"
         description: This segment filters visits based on device
- 
+
       - name: device_tablet
-        sql: device = 'tablet'
-        description: This segment filters visits based on device  
+        sql: "{TABLE.device} = 'tablet'"
+        description: This segment filters visits based on device 
 
       - name: lapsed_users
         sql: "{TABLE.lapsed_or_returned_status} = 'Lapsed'"
