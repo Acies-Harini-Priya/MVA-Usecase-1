@@ -2,7 +2,13 @@ tables:
   - name: mva_revenue_ltv_1
     sql: {{ load_sql('mva_revenue') }}
     description: revenue information
-    public: true
+    
+
+
+    joins:
+      - name: mva_cost
+        relationship: one_to_one
+        sql: "{TABLE.visit_id}={mva_cost.visit_id} and {TABLE.visit_date}={mva_cost.visit_date}"
 
     dimensions:
 
@@ -41,6 +47,7 @@ tables:
         type: string
         description: Visit_id of a user  
         primary_key: true
+        public: true
 
       - name: session_id
         column: session_id
