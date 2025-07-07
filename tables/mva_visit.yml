@@ -237,6 +237,16 @@ tables:
         type: number
         description: 60 days profit 
 
+      - name: returned_rpv
+        type: string
+        sql: > 
+          CASE 
+              WHEN {TABLE.profit} < 50000 THEN 'Low RPV'
+              WHEN {TABLE.profit} >= 50000 and {TABLE.profit} <= 150000 THEN 'Medium RPV'
+              ELSE 'High RPV'
+          END AS 
+        description: "Low RPV , High RPV , Medium RPV "
+
     segments:
       - name: device_desktop
         sql:  "{TABLE.device} = 'desktop'"
