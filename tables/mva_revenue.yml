@@ -6,9 +6,9 @@ tables:
 
 
     joins:
-      - name: mva_cost
+      - name: mva_cost_ltv_1
         relationship: one_to_one
-        sql: "{TABLE.visit_id}={mva_cost.visit_id} and {TABLE.visit_date}={mva_cost.visit_date}"
+        sql: "{TABLE.visit_id}={mva_cost_ltv_1.visit_id} and {TABLE.visit_date}={mva_cost_ltv_1.visit_date}"
 
     dimensions:
 
