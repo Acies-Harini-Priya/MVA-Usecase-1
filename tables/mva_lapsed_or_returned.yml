@@ -21,6 +21,6 @@ tables:
         description: The date when the user visited
 
       - name: status
-        column: status
+        column: "COALESCE(status, 'NO User')"
         type: string
         description: Status 
